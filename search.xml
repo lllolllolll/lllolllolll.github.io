@@ -4,13 +4,50 @@
   
     
     <entry>
+      <title>隐马尔可夫模型</title>
+      <link href="/2022/11/28/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/"/>
+      <url>/2022/11/28/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/</url>
+      
+        <content type="html"><![CDATA[<p><img src="/image/HMM/1.png" alt=""></p><h3 id="i"><a href="#i" class="headerlink" title="(i)"></a>(i)</h3><ul><li>初始概率分布即状态序列初始时刻状态值$i_1$的状态概率$q_1$</li><li>转移矩阵可以看成相邻两个时刻状态概率的关系在已知<script type="math/tex">i_{t-1}</script>的概率分布情况下，<script type="math/tex">q_{i_{t}}</script>的概率分布(就是条件概率)</li><li>发射矩阵可以看成序列I和O之间概率分布的关系，在已知I的概率分布的情况下，O的概率分布<h3 id="ii"><a href="#ii" class="headerlink" title="(ii)"></a>(ii)</h3></li><li>齐次Markov: 任意时刻的状态值概率分布(非初始)只与上一时刻相关</li><li>观察独立: $o_j$的概率分布只与$i_j$的有关<h3 id="iii"><a href="#iii" class="headerlink" title="(iii)"></a>(iii)</h3></li><li>evluation: 已知模型参数，求某时刻观测值概率分布(易)</li><li>learning: 求令o概率分布均值(or其他指标)最大的模型 (难)</li><li>Decoding: 已知O，求令I概率分布某概率值(指标)最大的模型 (中)</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法，马尔可夫链 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 马尔可夫链 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>马尔可夫链</title>
       <link href="/2022/11/27/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/"/>
       <url>/2022/11/27/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/</url>
       
-        <content type="html"><![CDATA[<h3 id="马尔科夫链"><a href="#马尔科夫链" class="headerlink" title="马尔科夫链"></a>马尔科夫链</h3><ul><li><p>定义</p><p>对于一个随机变量的序列</p><script type="math/tex; mode=display">x=\{x_0,x_1...x_{n-1},x_n\}</script><p>对于$t∈[0,n]$，$x_t$的取值空间(记为状态空间S)，随机变量可以是离散的，也可以是连续的，X的构成为随机过程 </p><p>假设$0$时刻随机变量<script type="math/tex">x_{0}</script>遵循<script type="math/tex">p(x_0)=p_0</script>,记为初始状态分布。任意<script type="math/tex">x_t</script>只取决于<script type="math/tex">x_{t-1}</script>,这一性质称为马尔科夫性 </p></li></ul><script type="math/tex; mode=display">p(x_t|x_{t-1},...x_2,x_1)=p(x_t|x_{t-1})</script><ul><li><p>状态转移矩阵</p><p>假定S中有k个取值$y_1,y_2…y_k$,</p><p>则从任一时刻到下一时刻得所有可能概率可构成状态转移矩阵。</p><p>设从状态<script type="math/tex">y_a</script>转移到<script type="math/tex">y_b</script>的概率为<script type="math/tex">p_{ab}</script></p></li></ul><script type="math/tex; mode=display">\begin{equation}p = \left[\begin{array}{cccc}p_{11}&p_{12}&...&p_{1k}\\p_{21}&p_{22}&...&p_{2k}\\...&...&...&...\\p_{k1}&p_{k2}&...&p_{kk}\\\end{array}\right]\end{equation}</script><ul><li><p>马尔可夫链模型状态概率具有稳定性</p><p>若初始状态A的各状态概率为$p_1=[p_1,P_2…p_k]$</p><p>两个时刻后各状态概率为$P_1*P^2$</p><p>n个时刻后的概率分布$p_n=p_1*p^n$</p><p>实验证明当n足够大时，$p_n$不再变化</p></li></ul><script type="math/tex; mode=display">p_{n+1}=p_{n}p=p_1p^n</script><p><img src="/image/8.png" alt=""></p><ul><li>数学证明：还不会</li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="马尔科夫链"><a href="#马尔科夫链" class="headerlink" title="马尔科夫链"></a>马尔科夫链</h3><ul><li><p>定义</p><p>对于一个随机变量的序列</p><script type="math/tex; mode=display">x=\{x_0,x_1...x_{n-1},x_n\}</script><p>对于$t∈[0,n]$，$x_t$的取值空间(记为状态空间S)，随机变量可以是离散的，也可以是连续的，X的构成为随机过程 </p><p>假设$0$时刻随机变量<script type="math/tex">x_{0}</script>遵循<script type="math/tex">p(x_0)=p_0</script>,记为初始状态分布。任意<script type="math/tex">x_t</script>只取决于<script type="math/tex">x_{t-1}</script>(一阶),这一性质称为马尔科夫性 </p></li></ul><script type="math/tex; mode=display">p(x_t|x_{t-1},...x_2,x_1)=p(x_t|x_{t-1})</script><ul><li><p>(一个马尔科夫过程就是指过程中的每个状态的转移只依赖于之前的 n个状态，这个过程被称为 n阶马尔科夫模型，其中 n是影响转移状态的数目,但常用1阶马尔可夫过程，故马尔可夫过程一般指一阶马尔可夫过程)</p></li><li><p>转移概率<br>马尔可夫链可以用条件概率模型来描述。我们把在前一时刻某取值下当前时刻取值的条件概率称作转移概率.</p><script type="math/tex; mode=display">p(x_t|x_{t-1})</script></li><li><p>状态转移矩阵</p><p>假定S中有k个取值$y_1,y_2…y_k$,</p><p>则从任一时刻到下一时刻得所有可能概率可构成状态转移矩阵。</p><p>设从状态<script type="math/tex">y_a</script>转移到<script type="math/tex">y_b</script>的概率为<script type="math/tex">p_{ab}</script></p></li></ul><script type="math/tex; mode=display">\begin{equation}p = \left[\begin{array}{cccc}p_{11}&p_{12}&...&p_{1k}\\p_{21}&p_{22}&...&p_{2k}\\...&...&...&...\\p_{k1}&p_{k2}&...&p_{kk}\\\end{array}\right]\end{equation}</script><ul><li><p>马尔可夫链模型状态概率具有稳定性</p><p>若初始状态A的各状态概率为$p_1=[p_1,P_2…p_k]$</p><p>两个时刻后各状态概率为$P_1*P^2$</p><p>n个时刻后的概率分布$p_n=p_1*p^n$</p><p>实验证明当n足够大时，$p_n$不再变化</p></li></ul><script type="math/tex; mode=display">p_{n+1}=p_{n}p=p_1p^n</script><p><img src="/image/8.png" alt=""></p><ul><li><p>数学证明：<br><img src="/image/9.png" alt="可以用特征分解把矩阵转化为$DAD^T$的形式"><br><img src="/image/10.png" alt=""></p></li><li><p>马尔可夫模型解题过程</p><ul><li>统计获得状态转移矩阵</li><li>计算足够长时间后时刻的状态概率，特定时间状态概率…</li></ul></li></ul><p><a href="https://blog.csdn.net/qq_27825451/article/details/100117715">参考博客</a></p>]]></content>
       
       
+      <categories>
+          
+          <category> 算法，马尔可夫链 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 马尔可夫链 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -54,17 +91,6 @@
     
     
     <entry>
-      <title>Image</title>
-      <link href="/image/index.html"/>
-      <url>/image/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>About</title>
       <link href="/about/index.html"/>
       <url>/about/index.html</url>
@@ -87,6 +113,17 @@
     
     
     <entry>
+      <title>Image</title>
+      <link href="/image/index.html"/>
+      <url>/image/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Movie</title>
       <link href="/movie/index.html"/>
       <url>/movie/index.html</url>
@@ -98,9 +135,9 @@
     
     
     <entry>
-      <title>Tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>Link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -109,9 +146,9 @@
     
     
     <entry>
-      <title>Link</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title>Tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
