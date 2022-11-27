@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>马尔可夫链</title>
+      <link href="/2022/11/27/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/"/>
+      <url>/2022/11/27/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/</url>
+      
+        <content type="html"><![CDATA[<h3 id="马尔科夫链"><a href="#马尔科夫链" class="headerlink" title="马尔科夫链"></a>马尔科夫链</h3><ul><li><p>定义</p><p>对于一个随机变量的序列</p><script type="math/tex; mode=display">x=\{x_0,x_1...x_{n-1},x_n\}</script><p>对于$t∈[0,n]$，$x_t$的取值空间(记为状态空间S)，随机变量可以是离散的，也可以是连续的，X的构成为随机过程 </p><p>假设$0$时刻随机变量<script type="math/tex">x_{0}</script>遵循<script type="math/tex">p(x_0)=p_0</script>,记为初始状态分布。任意<script type="math/tex">x_t</script>只取决于<script type="math/tex">x_{t-1}</script>,这一性质称为马尔科夫性 </p></li></ul><script type="math/tex; mode=display">p(x_t|x_{t-1},...x_2,x_1)=p(x_t|x_{t-1})</script><ul><li><p>状态转移矩阵</p><p>假定S中有k个取值$y_1,y_2…y_k$,</p><p>则从任一时刻到下一时刻得所有可能概率可构成状态转移矩阵。</p><p>设从状态<script type="math/tex">y_a</script>转移到<script type="math/tex">y_b</script>的概率为<script type="math/tex">p_{ab}</script></p></li></ul><script type="math/tex; mode=display">\begin{equation}p = \left[\begin{array}{cccc}p_{11}&p_{12}&...&p_{1k}\\p_{21}&p_{22}&...&p_{2k}\\...&...&...&...\\p_{k1}&p_{k2}&...&p_{kk}\\\end{array}\right]\end{equation}</script><ul><li><p>马尔可夫链模型状态概率具有稳定性</p><p>若初始状态A的各状态概率为$p_1=[p_1,P_2…p_k]$</p><p>两个时刻后各状态概率为$P_1*P^2$</p><p>n个时刻后的概率分布$p_n=p_1*p^n$</p><p>实验证明当n足够大时，$p_n$不再变化</p></li></ul><script type="math/tex; mode=display">p_{n+1}=p_{n}p=p_1p^n</script><p><img src="/image/8.png" alt=""></p><ul><li>数学证明：还不会</li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>算法组学习路线</title>
+      <link href="/2022/11/26/%E7%AE%97%E6%B3%95%E7%BB%84%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/"/>
+      <url>/2022/11/26/%E7%AE%97%E6%B3%95%E7%BB%84%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/</url>
+      
+        <content type="html"><![CDATA[<h2 id="python"><a href="#python" class="headerlink" title="python"></a>python</h2><h4 id="1-基础语法"><a href="#1-基础语法" class="headerlink" title="1.基础语法"></a>1.基础语法</h4><ul><li>视频：b站小甲鱼</li><li>书籍：<a href="https://www.aliyundrive.com/s/B6mESVPf6Sz">《python编程入门到实践》</a></li><li>文档：<a href="https://www.runoob.com/python/python-reg-expressions.html">菜鸟教程-Python</a></li></ul><h4 id="2-python练习题"><a href="#2-python练习题" class="headerlink" title="2.python练习题"></a>2.python练习题</h4><ul><li><p>冒泡算法</p></li><li><p><em>斐波那契数列</em>（兔子<em>数列</em>）:</p><p>有一对兔子，从出生后第3个月起每个月都生一对兔子，小兔子长到第三个月后每个月又生一对兔子，假如兔子都不死，问每个月的兔子总数为多少</p></li><li><p>判断101-200之间有多少个素数，并输出所有素数。</p></li><li><p>打印出所有的”水仙花数(narcissus number)“，所谓”水仙花数”是指一个三位数，其各位数字立方和等于该数本身。例如：153是一个”水仙花数”，因为153=1的三次方＋5的三次方＋3的三次方。</p></li><li><p>两个正整数m和n，求其最大公约数和最小公倍数</p></li><li><p>（选做）复现knn（最好在看完numpy后完成）</p></li></ul><h4 id="3-Numpy-amp-Pandas-amp-Matplotlib"><a href="#3-Numpy-amp-Pandas-amp-Matplotlib" class="headerlink" title="3.Numpy&amp;Pandas&amp;Matplotlib"></a>3.Numpy&amp;Pandas&amp;Matplotlib</h4><p>这三个Python数据分析库的命令很多，不必每一条命令都死记硬背，自己过一遍并且记录好笔记，需要用的时候可以去查笔记。</p><p>书籍推荐：<strong>《利用Python进行数据分析》</strong></p><ul><li>Numpy<ul><li>学习了解Numpy库的使用</li><li>文档：阿里云天池-Numpy学习文档 <a href="https://tianchi.aliyun.com/course/323">https://tianchi.aliyun.com/course/323</a></li><li>PS:跟着文档打一遍代码留点印象即可</li></ul></li><li>Pandas<ul><li><strong>数据分析需要重点学习的库</strong></li><li>视频：Pandas数据分析从入门到实战  <a href="https://www.bilibili.com/video/BV1UJ411A7Fs">https://www.bilibili.com/video/BV1UJ411A7Fs</a></li></ul></li><li>Matplotlib(选)<ul><li>一个用于绘制各类图的库</li><li>有参加数学建模、天池、Kaggle等比赛想法的同学需要去尽早学习这个库，**没有比赛意愿的可以暂时先跳过这个库的学习</li></ul></li></ul><hr><hr><h2 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h2><ul><li>数学知识：高代（起码要知道矩阵运算），概率论</li><li>书：<a href="https://pan.baidu.com/s/1zDgK28ylbeyY7WGt6yCoRg">统计学习方法</a>—-提取码：9i43</li><li>视频：b站陆小亮带读李航统计学习方法</li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 学习路线 </tag>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第一篇文章</title>
+      <link href="/2022/11/23/article/"/>
+      <url>/2022/11/23/article/</url>
+      
+        <content type="html"><![CDATA[<h2 id="swss"><a href="#swss" class="headerlink" title="swss"></a>swss</h2>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+    
+    
+    <entry>
+      <title>Categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Image</title>
+      <link href="/image/index.html"/>
+      <url>/image/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>About</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Movie</title>
+      <link href="/movie/index.html"/>
+      <url>/movie/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+  
+</search>
