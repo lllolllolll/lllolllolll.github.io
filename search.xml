@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>朴素贝叶斯法</title>
+      <link href="/2022/11/29/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/"/>
+      <url>/2022/11/29/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<h3 id="朴素贝叶斯基本知识"><a href="#朴素贝叶斯基本知识" class="headerlink" title="朴素贝叶斯基本知识"></a>朴素贝叶斯基本知识</h3><p><img src="/image/朴素贝叶斯/1.png" alt=""></p><h3 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h3><p><img src="/image/朴素贝叶斯/2.png" alt=""></p><h3 id="贝叶斯估计"><a href="#贝叶斯估计" class="headerlink" title="贝叶斯估计"></a>贝叶斯估计</h3><p><img src="/image/朴素贝叶斯/3.png" alt=""></p><h3 id="算法过程"><a href="#算法过程" class="headerlink" title="算法过程"></a>算法过程</h3><ul><li>1.计算先验概率和条件概率</li><li>2.计算贝叶斯公式的各类值</li><li>3.求得最大的类<h3 id="题目及求解"><a href="#题目及求解" class="headerlink" title="题目及求解"></a>题目及求解</h3><img src="/image/朴素贝叶斯/4.png" alt=""></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法，朴素贝叶斯 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 朴素贝叶斯 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>EM算法</title>
+      <link href="/2022/11/29/EM/"/>
+      <url>/2022/11/29/EM/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法，马尔可夫模型，EM </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 马尔可夫链，EM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>机器学习背景</title>
       <link href="/2022/11/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%83%8C%E6%99%AF/"/>
       <url>/2022/11/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%83%8C%E6%99%AF/</url>
@@ -35,19 +85,19 @@
       <link href="/2022/11/28/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/"/>
       <url>/2022/11/28/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/</url>
       
-        <content type="html"><![CDATA[<p><img src="/image/HMM/1.png" alt=""></p><h3 id="i"><a href="#i" class="headerlink" title="(i)"></a>(i)</h3><ul><li>初始概率分布即状态序列初始时刻状态值$i_1$的状态概率$q_1$</li><li>转移矩阵可以看成相邻两个时刻状态概率的关系在已知<script type="math/tex">i_{t-1}</script>的概率分布情况下，<script type="math/tex">q_{i_{t}}</script>的概率分布(就是条件概率)</li><li>发射矩阵可以看成序列I和O之间概率分布的关系，在已知I的概率分布的情况下，O的概率分布<h3 id="ii"><a href="#ii" class="headerlink" title="(ii)"></a>(ii)</h3></li><li>齐次Markov: 任意时刻的状态值概率分布(非初始)只与上一时刻相关</li><li>观察独立: $o_j$的概率分布只与$i_j$的有关<h3 id="iii"><a href="#iii" class="headerlink" title="(iii)"></a>(iii)</h3></li><li>evluation: 已知模型参数，求某时刻观测值概率分布(易)</li><li>learning: 求令o概率分布均值(or其他指标)最大的模型 (难)</li><li>Decoding: 已知O，求令I概率分布某概率值(指标)最大的模型 (中)</li></ul><h3 id="概率计算算法-evaluation"><a href="#概率计算算法-evaluation" class="headerlink" title="概率计算算法(evaluation)"></a>概率计算算法(evaluation)</h3><ul><li>直接计算法(原理上可行，但计算量过大)<br><img src="/image/HMM/2.png" alt=""></li><li>前向算法<ul><li>前向概率: 给定马尔可夫模型$\lambda$，定义到时刻t部分观测序列为$o_1,o_2…o_t$且状态为$q_i$的概率为前向概率，记作:<script type="math/tex; mode=display">\alpha_{t}(i) = P(o_1,o_2...o_t,i_t=q_i|\lambda)</script>证明:<br><img src="/image/HMM/3.png" alt=""><br>算法过程:<br><img src="/image/HMM/4.png" alt=""><br>题目及解答:<br><img src="/image/HMM/5.png" alt=""><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">A = np.array([[0.5,0.2,0.3],[0.3,0.5,0.2],[0.2,0.3,0.5]])</span><br><span class="line">B = np.array([[0.5,0.5],[0.4,0.6],[0.7,0.3]])</span><br><span class="line">pi = np.array([0.2,0.4,0.4])#观测序列的值</span><br><span class="line">O = [0,1,0]</span><br><span class="line">alpha_1 = ((B.T[O[0]])*pi)</span><br><span class="line">def reduction(alpha,A,B,i):</span><br><span class="line">    return  np.sum(np.dot(alpha,A)*A,axis=0)*(B.T[i])</span><br><span class="line">def recursion(alpha,A,B,O,T):#T为时间长度</span><br><span class="line">    for i in range(T-1):</span><br><span class="line">        alpha = reduction(alpha,A,B,O[i+1])</span><br><span class="line">    return  alpha      </span><br><span class="line">np.sum(recursion(alpha_1,A,B,O,3))    </span><br></pre></td></tr></table></figure></li></ul></li><li>后向算法<ul><li>后向概率:给定HMM模型$\lambda$，定义在时刻t状态状态为$q_i$的条件下，从$t-1$到T的部分观测序列为的概率为后向概率，记作<script type="math/tex; mode=display">\beta_t(i) = p(o_{t+1},o_{t+2},...o_{T}|i_t=q_i,\lambda)</script>证明:<br><img src="/image/HMM/6.png" alt=""><br>算法过程<br><img src="/image/HMM/7.png" alt=""><br>题目及解答<br>题目为前向算法中题目<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">A = np.array([[0.5,0.2,0.3],[0.3,0.5,0.2],[0.2,0.3,0.5]])</span><br><span class="line">B = np.array([[0.5,0.5],[0.4,0.6],[0.7,0.3]])</span><br><span class="line">pi = np.array([0.2,0.4,0.4])#观测序列的值</span><br><span class="line">O = [0,1,0]</span><br><span class="line">beta_T = [1,1,1]</span><br><span class="line">def reduction(beta,A,B,i):</span><br><span class="line">    return np.sum(A*(B.T[i])*beta,axis = 1)</span><br><span class="line">def recursion(beta,A,B,O,T):</span><br><span class="line">    for i in range(T-1):</span><br><span class="line">        beta = reduction(beta,A,B,O[-(i+1)])</span><br><span class="line">    return beta  </span><br><span class="line">np.sum(pi*(B.T[O[0]])*recursion(beta_T,A,B,O,3))</span><br></pre></td></tr></table></figure></li></ul></li></ul>]]></content>
+        <content type="html"><![CDATA[<p><img src="/image/HMM/1.png" alt=""></p><h3 id="i"><a href="#i" class="headerlink" title="(i)"></a>(i)</h3><ul><li>初始概率分布即状态序列初始时刻状态值$i_1$的状态概率$q_1$</li><li>转移矩阵可以看成相邻两个时刻状态概率的关系在已知<script type="math/tex">i_{t-1}</script>的概率分布情况下，<script type="math/tex">q_{i_{t}}</script>的概率分布(就是条件概率)</li><li>发射矩阵可以看成序列I和O之间概率分布的关系，在已知I的概率分布的情况下，O的概率分布<h3 id="ii"><a href="#ii" class="headerlink" title="(ii)"></a>(ii)</h3></li><li>齐次Markov: 任意时刻的状态值概率分布(非初始)只与上一时刻相关</li><li>观察独立: $o_j$的概率分布只与$i_j$的有关<h3 id="iii"><a href="#iii" class="headerlink" title="(iii)"></a>(iii)</h3></li><li>evluation: 已知模型参数，求某时刻观测值概率分布(易)</li><li>learning: 求令o概率分布均值(or其他指标)最大的模型 (难)</li><li>Decoding: 已知O，求令I概率分布某概率值(指标)最大的模型 (中)</li></ul><h3 id="概率计算算法-evaluation"><a href="#概率计算算法-evaluation" class="headerlink" title="概率计算算法(evaluation)"></a>概率计算算法(evaluation)</h3><ul><li>直接计算法(原理上可行，但计算量过大)<br><img src="/image/HMM/2.png" alt=""></li><li>前向算法(复杂度:$O(TN^2)$)<ul><li>前向概率: 给定马尔可夫模型$\lambda$，定义到时刻t部分观测序列为$o_1,o_2…o_t$且状态为$q_i$的概率为前向概率，记作:<script type="math/tex; mode=display">\alpha_{t}(i) = P(o_1,o_2...o_t,i_t=q_i|\lambda)</script>证明:<br><img src="/image/HMM/3.png" alt=""><br>算法过程:<br><img src="/image/HMM/4.png" alt=""><br>题目及解答:<br><img src="/image/HMM/5.png" alt=""><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">A = np.array([[0.5,0.2,0.3],[0.3,0.5,0.2],[0.2,0.3,0.5]])</span><br><span class="line">B = np.array([[0.5,0.5],[0.4,0.6],[0.7,0.3]])</span><br><span class="line">pi = np.array([0.2,0.4,0.4])#观测序列的值</span><br><span class="line">O = [0,1,0]</span><br><span class="line">alpha_1 = ((B.T[O[0]])*pi)</span><br><span class="line">def reduction(alpha,A,B,i):</span><br><span class="line">    return  np.sum(np.dot(alpha,A)*A,axis=0)*(B.T[i])</span><br><span class="line">def recursion(alpha,A,B,O,T):#T为时间长度</span><br><span class="line">    for i in range(T-1):</span><br><span class="line">        alpha = reduction(alpha,A,B,O[i+1])</span><br><span class="line">    return  alpha      </span><br><span class="line">np.sum(recursion(alpha_1,A,B,O,3))    </span><br></pre></td></tr></table></figure></li></ul></li><li>后向算法<ul><li>后向概率:给定HMM模型$\lambda$，定义在时刻t状态状态为$q_i$的条件下，从$t-1$到T的部分观测序列为的概率为后向概率，记作<script type="math/tex; mode=display">\beta_t(i) = p(o_{t+1},o_{t+2},...o_{T}|i_t=q_i,\lambda)</script>证明:<br><img src="/image/HMM/6.png" alt=""><br>算法过程<br><img src="/image/HMM/7.png" alt=""><br>题目及解答<br>题目为前向算法中题目<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">A = np.array([[0.5,0.2,0.3],[0.3,0.5,0.2],[0.2,0.3,0.5]])</span><br><span class="line">B = np.array([[0.5,0.5],[0.4,0.6],[0.7,0.3]])</span><br><span class="line">pi = np.array([0.2,0.4,0.4])#观测序列的值</span><br><span class="line">O = [0,1,0]</span><br><span class="line">beta_T = [1,1,1]</span><br><span class="line">def reduction(beta,A,B,i):</span><br><span class="line">    return np.sum(A*(B.T[i])*beta,axis = 1)</span><br><span class="line">def recursion(beta,A,B,O,T):</span><br><span class="line">    for i in range(T-1):</span><br><span class="line">        beta = reduction(beta,A,B,O[-(i+1)])</span><br><span class="line">    return beta  </span><br><span class="line">np.sum(pi*(B.T[O[0]])*recursion(beta_T,A,B,O,3))</span><br></pre></td></tr></table></figure></li></ul></li></ul>]]></content>
       
       
       <categories>
           
-          <category> 算法，马尔可夫链 </category>
+          <category> 算法，马尔可夫模型 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 马尔可夫链 </tag>
+            <tag> 马尔可夫模型 </tag>
             
         </tags>
       
@@ -65,14 +115,14 @@
       
       <categories>
           
-          <category> 算法，马尔可夫链 </category>
+          <category> 算法，马尔可夫模型 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 马尔可夫链 </tag>
+            <tag> 马尔可夫模型 </tag>
             
         </tags>
       
@@ -118,9 +168,9 @@
     
     
     <entry>
-      <title>Categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>About</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -140,9 +190,20 @@
     
     
     <entry>
-      <title>About</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>Categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Movie</title>
+      <link href="/movie/index.html"/>
+      <url>/movie/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -165,17 +226,6 @@
       <title>Music</title>
       <link href="/music/index.html"/>
       <url>/music/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Movie</title>
-      <link href="/movie/index.html"/>
-      <url>/movie/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
