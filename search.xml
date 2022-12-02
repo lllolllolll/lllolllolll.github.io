@@ -8,7 +8,7 @@
       <link href="/2022/11/29/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/"/>
       <url>/2022/11/29/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/</url>
       
-        <content type="html"><![CDATA[<h3 id="朴素贝叶斯基本知识"><a href="#朴素贝叶斯基本知识" class="headerlink" title="朴素贝叶斯基本知识"></a>朴素贝叶斯基本知识</h3><p><img src="/image/朴素贝叶斯/1.png" alt=""></p><h3 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h3><p><img src="/image/朴素贝叶斯/2.png" alt=""></p><h3 id="贝叶斯估计"><a href="#贝叶斯估计" class="headerlink" title="贝叶斯估计"></a>贝叶斯估计</h3><p><img src="/image/朴素贝叶斯/3.png" alt=""></p><h3 id="算法过程"><a href="#算法过程" class="headerlink" title="算法过程"></a>算法过程</h3><ul><li>1.计算先验概率和条件概率</li><li>2.计算贝叶斯公式的各类值</li><li>3.求得最大的类<h3 id="题目及求解"><a href="#题目及求解" class="headerlink" title="题目及求解"></a>题目及求解</h3><img src="/image/朴素贝叶斯/4.png" alt=""></li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="朴素贝叶斯基本知识"><a href="#朴素贝叶斯基本知识" class="headerlink" title="朴素贝叶斯基本知识"></a>朴素贝叶斯基本知识</h3><p><img src="/image/朴素贝叶斯/1.png" alt=""></p><h3 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h3><p><img src="/image/朴素贝叶斯/2.png" alt=""></p><h3 id="贝叶斯估计"><a href="#贝叶斯估计" class="headerlink" title="贝叶斯估计"></a>贝叶斯估计</h3><p><img src="/image/朴素贝叶斯/3.png" alt=""></p><h3 id="算法过程"><a href="#算法过程" class="headerlink" title="算法过程"></a>算法过程</h3><ul><li>1.计算先验概率和条件概率</li><li>2.计算贝叶斯公式的各类值</li><li>3.求得最大的类<h3 id="题目及求解"><a href="#题目及求解" class="headerlink" title="题目及求解"></a>题目及求解</h3><img src="/image/朴素贝叶斯/4.png" alt=""><br>极大似然估计<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line"></span><br><span class="line">X = np.array([[1,1,1,1,1,2,2,2,2,2,3,3,3,3,3],[&#x27;S&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;S&#x27;,&#x27;S&#x27;,&#x27;S&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;L&#x27;,&#x27;L&#x27;,&#x27;L&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;L&#x27;,&#x27;L&#x27;]])</span><br><span class="line">Y = np.array([-1,-1,1,1,-1,-1,-1,1,1,1,1,1,1,1,-1])</span><br><span class="line"></span><br><span class="line">#数据处理，转为独热编码</span><br><span class="line">enc = OneHotEncoder()</span><br><span class="line">enc.fit(X.T)</span><br><span class="line">categories = enc.categories_ #标签</span><br><span class="line">X_ =enc.transform(X.T).toarray()</span><br><span class="line"></span><br><span class="line">enc_ = OneHotEncoder()</span><br><span class="line">enc_.fit(Y.reshape(15,1))</span><br><span class="line">cat_y = enc_.categories_ #y的标签</span><br><span class="line">Y_ = enc_.transform(Y.reshape(15,1)).toarray()</span><br><span class="line"></span><br><span class="line">#求P_y</span><br><span class="line">n_y = []</span><br><span class="line">l = len(Y)</span><br><span class="line">Y_label = np.unique(Y)</span><br><span class="line">for i in range(len(Y_label)):</span><br><span class="line">    n_y.append(np.sum(0 + (Y==Y_label[i])))</span><br><span class="line">P_y = np.array(n_y)/l</span><br><span class="line"></span><br><span class="line">#极大似然法求条件概率</span><br><span class="line">def recursion(x,X_,Y_):</span><br><span class="line">   X_x = X_[:,x]</span><br><span class="line">   P_xy = []</span><br><span class="line">   for i in range(len(Y_[0])):</span><br><span class="line">     p_xy = [np.sum((0+((Y_[:,i]+X_x[:,j])==2)))/np.sum(((Y_[:,i]!=0)+0)) for j in range(len(x))]</span><br><span class="line">     z = 1</span><br><span class="line">     for i in p_xy:</span><br><span class="line">       z=z*i</span><br><span class="line">     P_xy.append(z)  </span><br><span class="line">   return P_xy</span><br><span class="line">     </span><br><span class="line">P = recursion([1,5],X_,Y_)*P_y #输入x时记得是从0记起</span><br><span class="line">cat_y[0][np.argmax(P)] # y的标签</span><br></pre></td></tr></table></figure>贝叶斯估计<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line"></span><br><span class="line">X = np.array([[1,1,1,1,1,2,2,2,2,2,3,3,3,3,3],[&#x27;S&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;S&#x27;,&#x27;S&#x27;,&#x27;S&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;L&#x27;,&#x27;L&#x27;,&#x27;L&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;L&#x27;,&#x27;L&#x27;]])</span><br><span class="line">Y = np.array([-1,-1,1,1,-1,-1,-1,1,1,1,1,1,1,1,-1])</span><br><span class="line"></span><br><span class="line">#数据处理，转为独热编码</span><br><span class="line">enc = OneHotEncoder()</span><br><span class="line">enc.fit(X.T)</span><br><span class="line">categories = enc.categories_ #标签</span><br><span class="line">X_ =enc.transform(X.T).toarray()</span><br><span class="line"></span><br><span class="line">enc_ = OneHotEncoder()</span><br><span class="line">enc_.fit(Y.reshape(15,1))</span><br><span class="line">cat_y = enc_.categories_ #y的标签</span><br><span class="line">Y_ = enc_.transform(Y.reshape(15,1)).toarray()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#贝叶斯估计  </span><br><span class="line">def recursion_be(x,x_l,X_,Y_,lbd): </span><br><span class="line">   #求p_x</span><br><span class="line">   x_t = x</span><br><span class="line">   for i in range(1,len(x)):</span><br><span class="line">     x_t[i] = x[i] + x_l[i-1] </span><br><span class="line">   X_x = X_[:,x_t]</span><br><span class="line">   P_xy = []</span><br><span class="line">   for i in range(len(Y_[0])):</span><br><span class="line">     p_xy = [(np.sum(0+((Y_[:,i]+X_x[:,j])==2))+lbd)/(np.sum(((Y_[:,i]!=0)+0))+x[j]*lbd) for j in range(len(x))]</span><br><span class="line">     z = 1</span><br><span class="line">     for i in p_xy:</span><br><span class="line">       z=z*i</span><br><span class="line">     P_xy.append(z)</span><br><span class="line"></span><br><span class="line">   #求p_y</span><br><span class="line">   n_y = []</span><br><span class="line">   l = len(Y)</span><br><span class="line">   Y_label = np.unique(Y)</span><br><span class="line">   P_y = []</span><br><span class="line">   for i in range(len(Y_label)):</span><br><span class="line">      P_y.append((np.sum(0 + (Y==Y_label[i]))+lbd)/(l+lbd*i))        </span><br><span class="line">   return np.array(P_xy)*np.array(P_y)  </span><br><span class="line"></span><br><span class="line">P = recursion_be([1,2],[3,3],X_,Y_,1) #输入x时记得是从每个特征的0开始记起,x_l为每个特征的长度</span><br><span class="line">cat_y[0][np.argmax(P)] # y的标签</span><br></pre></td></tr></table></figure></li></ul>]]></content>
       
       
       <categories>
@@ -141,36 +141,45 @@
       
         <tags>
             
-            <tag> 学习路线 </tag>
-            
             <tag> 算法 </tag>
+            
+            <tag> 学习路线 </tag>
             
         </tags>
       
     </entry>
     
     
+  
+  
+    
     
     <entry>
-      <title>第一篇文章</title>
-      <link href="/2022/11/23/article/"/>
-      <url>/2022/11/23/article/</url>
+      <title>Categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
-        <content type="html"><![CDATA[<h2 id="swss"><a href="#swss" class="headerlink" title="swss"></a>swss</h2>]]></content>
-      
-      
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
-    
-  
-  
     
     
     <entry>
       <title>About</title>
       <link href="/about/index.html"/>
       <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Movie</title>
+      <link href="/movie/index.html"/>
+      <url>/movie/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -190,20 +199,9 @@
     
     
     <entry>
-      <title>Categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Movie</title>
-      <link href="/movie/index.html"/>
-      <url>/movie/index.html</url>
+      <title>Tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -226,17 +224,6 @@
       <title>Music</title>
       <link href="/music/index.html"/>
       <url>/music/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
