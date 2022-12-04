@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>数资组会</title>
+      <link href="/2022/12/04/%E6%95%B0%E8%B5%84%E9%83%A8%E7%AC%AC3%E6%AC%A1%E7%BB%84%E4%BC%9A/"/>
+      <url>/2022/12/04/%E6%95%B0%E8%B5%84%E9%83%A8%E7%AC%AC3%E6%AC%A1%E7%BB%84%E4%BC%9A/</url>
+      
+        <content type="html"><![CDATA[<h3 id="博客搭建"><a href="#博客搭建" class="headerlink" title="博客搭建"></a>博客搭建</h3><ul><li><a href="https://www.fomal.cc/posts/4aa2d85f.html">学会使用上传博客github仓库</a></li><li>渲染页面<br><a href="https://blog.csdn.net/qq_43740362/article/details/113783074?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167015598816800182115960%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=167015598816800182115960&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-113783074-null-null.142^v67^control,201^v3^control_1,213^v2^t3_control2&amp;utm_term=butterfly%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%96&amp;spm=1018.2226.3001.4187">修改_config.butterfly.yml配置文件</a></li><li>挂载vercel。。好处：提高网站访问速度，可以拥有自己的域名</li><li>使用vscode更新自己的博客<br>输入<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get-ExecutionPolicy</span><br></pre></td></tr></table></figure>会显示是否有权限，1.若输出为Restricted则无法使用，2.若输出为RemoteSigned则可以直接在博客所有文件夹执行npm及hexo命令<br>若为1<br>输入<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ExecutionPolicy -Scope CurrentUser</span><br></pre></td></tr></table></figure>填入RemoteSigned<br>再次执行get-ExecutionPolicy，输出为2即为成功</li><li>常用命令<br>hexo clean(hexo cl)：删除之前生成的文件，若未生成过静态文件，可忽略此命令。</li></ul><p>hexo server (hexo s): 在本地生成预览界面，若<a href="http://localhost:4000/被占用，可以使用">http://localhost:4000/被占用，可以使用</a> hexo s -p 8000   </p><p>hexo generate(hexo g)：生成静态文章，可以用 hexo g 缩写</p><p>hexo deploy(hexo d)：部署文章，可以用 hexo d 缩写</p><p>常用组合<br>hexo cl + hexo s 在本地预览界面(预览界面会取决于本地文件，会随本地文件的改变而更新)<br>hexo cl + hexo g + hexo d 将本地文件上传至github仓库(仓库更新完成后可以在自己的博客网址看到更新后的博客)</p><h3 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h3><ul><li>基本md语法<br>支持<a href="https://www.aliyundrive.com/s/7ZDpZJsVnHC">tex数学语法</a><br>tex简单使用<br>标题：用不同数量的#来划分各等级标题<br>+ 可以用来作为分类<br>代码块：用```包裹表代码块<br>公式：分$包裹表公式块</li><li><a href="https://www.aliyundrive.com/s/75NRdXKH5et">下载typora</a><br>提取码：xg50</li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>生成模型</title>
       <link href="/2022/12/02/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/"/>
       <url>/2022/12/02/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/</url>
@@ -180,28 +193,6 @@
     
     
     <entry>
-      <title>Music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Image</title>
-      <link href="/image/index.html"/>
-      <url>/image/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Movie</title>
       <link href="/movie/index.html"/>
       <url>/movie/index.html</url>
@@ -213,9 +204,9 @@
     
     
     <entry>
-      <title>About</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>Link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -235,9 +226,9 @@
     
     
     <entry>
-      <title>Tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -246,9 +237,31 @@
     
     
     <entry>
-      <title>Link</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title>About</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Image</title>
+      <link href="/image/index.html"/>
+      <url>/image/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
