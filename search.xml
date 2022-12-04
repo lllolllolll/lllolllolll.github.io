@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>生成模型</title>
+      <link href="/2022/12/02/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/"/>
+      <url>/2022/12/02/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法，生成模型 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 生成模型，算法，学习路线 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>朴素贝叶斯法</title>
       <link href="/2022/11/29/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/"/>
       <url>/2022/11/29/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/</url>
@@ -155,9 +180,9 @@
     
     
     <entry>
-      <title>Categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -166,9 +191,9 @@
     
     
     <entry>
-      <title>About</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>Image</title>
+      <link href="/image/index.html"/>
+      <url>/image/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -188,9 +213,20 @@
     
     
     <entry>
-      <title>Image</title>
-      <link href="/image/index.html"/>
-      <url>/image/index.html</url>
+      <title>About</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -213,17 +249,6 @@
       <title>Link</title>
       <link href="/link/index.html"/>
       <url>/link/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Music</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
