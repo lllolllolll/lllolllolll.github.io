@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title></title>
+      <link href="/2023/03/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+      <url>/2023/03/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h3><p>神经网络的典型训练程序如下：</p><ul><li>定义一些可学习参数（或权重）的神经网络</li><li>迭代输入数据</li><li>通过网络的过程输入</li><li>计算损失（输出距离正确值有多远）</li><li>将梯度传播回网络参数</li><li>更新网络权重，通常使用简单的更新规则：<code>weight = weight - learning_rate * gradien</code></li></ul><h2 id="定义网络"><a href="#定义网络" class="headerlink" title="定义网络"></a>定义网络</h2><p>让我们定义这个网络：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Net</span>(nn.Module):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):<span class="comment">#继承了父类，并定义了网络的基本属性</span></span><br><span class="line">        <span class="built_in">super</span>(Net, self).__init__()  </span><br><span class="line">        <span class="comment">#继承了父类nn.module</span></span><br><span class="line">        <span class="comment"># 1 input image channel, 6 output channels, 5x5 square convolution</span></span><br><span class="line">        <span class="comment"># kernel，两个空洞卷积</span></span><br><span class="line">        self.conv1 = nn.Conv2d(<span class="number">1</span>, <span class="number">6</span>, <span class="number">5</span>)</span><br><span class="line">        self.conv2 = nn.Conv2d(<span class="number">6</span>, <span class="number">16</span>, <span class="number">5</span>)</span><br><span class="line">        <span class="comment"># an affine operation: y = Wx + b，线性层</span></span><br><span class="line">        self.fc1 = nn.Linear(<span class="number">16</span> * <span class="number">5</span> * <span class="number">5</span>, <span class="number">120</span>)  <span class="comment"># 5*5 from image dimension</span></span><br><span class="line">        self.fc2 = nn.Linear(<span class="number">120</span>, <span class="number">84</span>)</span><br><span class="line">        self.fc3 = nn.Linear(<span class="number">84</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="comment"># Max pooling over a (2, 2) window。输入为32*32。卷积-池化-卷积-池化-展平-线性-relu激活-线性-relu激活-线性层10维</span></span><br><span class="line">        x = F.max_pool2d(F.relu(self.conv1(x)), (<span class="number">2</span>, <span class="number">2</span>))</span><br><span class="line">        <span class="comment"># If the size is a square, you can specify with a single number</span></span><br><span class="line">        x = F.max_pool2d(F.relu(self.conv2(x)), <span class="number">2</span>)</span><br><span class="line">        x = torch.flatten(x, <span class="number">1</span>) <span class="comment"># flatten all dimensions except the batch dimension</span></span><br><span class="line">        x = F.relu(self.fc1(x))</span><br><span class="line">        x = F.relu(self.fc2(x))</span><br><span class="line">        x = self.fc3(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">net = Net()<span class="comment">#实例化</span></span><br><span class="line"><span class="built_in">print</span>(net)</span><br></pre></td></tr></table></figure><p>只需定义<code>forward</code>函数，以及<code>backward</code>函数（计算梯度的位置）是使用自动为您定义的<code>autograd</code>。您可以使用<code>forward</code>功能</p><p>模型的可学习参数由<code>net.parameters()</code>返回</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">params = <span class="built_in">list</span>(net.parameters())<span class="comment">#用list调用其输出</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(params))</span><br><span class="line"><span class="built_in">print</span>(params[<span class="number">0</span>].size())  <span class="comment"># conv1的weight（权重）</span></span><br></pre></td></tr></table></figure><p>让我们尝试一个随机的32x32输入。注意：这个网络（LeNet）的预期输入大小是32x32。要在MNIST数据集上使用此网络，请将数据集中的图像大小调整为32x32。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">input</span> = torch.randn(<span class="number">1</span>, <span class="number">1</span>, <span class="number">32</span>, <span class="number">32</span>)<span class="comment">#生成一个维度为（1，1，32，32）的符合高斯分布的随机数组</span></span><br><span class="line">out = net(<span class="built_in">input</span>)</span><br><span class="line"><span class="comment">#将数据输入。因为在我们编写的模型所继承的nn.Module类中，其__call__方法内便包含了某种形式的对forward方法的调用，从而使得我们不需要显式地调用forward方法。</span></span><br><span class="line"><span class="built_in">print</span>(out)</span><br></pre></td></tr></table></figure><p>使用randomgradients将所有参数和backprops的渐变缓冲区归零：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net.zero_grad()<span class="comment">#将所有参数（包括子模块的参数）的梯度设置为零</span></span><br><span class="line"><span class="comment">#不清零的话，默认进行梯度叠加，Pytorch不设置自动清零，是因为叠加梯度有一些应用场景（例如一个数据x1前向传播，然后计算loss1，反向传播，又来一个数据x2前向传播，然后计算loss2，反向传播，这个时候，我们得到的梯度是叠加的，其现实意义是根据loss1+loss2求梯度（求导法则，loss相加，梯度也是相加），这其实就是batch实现需要的，甚至你可以变相实现更大的batch，例如硬件有限，只能32，你各一次zero_grad，那么就实现了64的batch_size）其实。所以我们需要手动清零。</span></span><br><span class="line">out.backward(torch.randn(<span class="number">1</span>, <span class="number">10</span>))<span class="comment">#</span></span><br></pre></td></tr></table></figure><p><a href="https://blog.csdn.net/qq_43391414/article/details/120571920?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167829130816800222846326%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=167829130816800222846326&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-4-120571920-null-null.142">关于pytorch梯度相关的详解</a></p><p><a href="https://liubingqing.blog.csdn.net/article/details/123420453">深入理解pytorch中计算图的inplace操作</a></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">###</span><br><span class="line">out.requires_grad #如果为Ture为可以求梯度，False为不可以</span><br><span class="line">###</span><br></pre></td></tr></table></figure><h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>损失函数获取（输出，目标）输入对，并计算输出（预测值）与目标之间距离的有效值。</p><p><a href="https://pytorch.org/docs/nn.html#loss-functions">损失函数</a>有很多个。一个简单的损失函数是：<code>nn.MSELoss</code>。它计算输出和目标之间的均方误差。</p><p>例如：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">output = net(<span class="built_in">input</span>)<span class="comment">#输出</span></span><br><span class="line">target = torch.randn(<span class="number">10</span>)  <span class="comment"># a dummy target, for example</span></span><br><span class="line">target = target.view(<span class="number">1</span>, -<span class="number">1</span>)  <span class="comment"># 将张量展平，让其与输出形状相同，假定这个是真实标签。即目标</span></span><br><span class="line">criterion = nn.MSELoss()<span class="comment">#实例化一个均方误差损失函数</span></span><br><span class="line"></span><br><span class="line">loss = criterion(output, target)</span><br><span class="line"><span class="built_in">print</span>(loss)</span><br></pre></td></tr></table></figure><p>现在，如果你对<code>loss</code>进行反向传播，使用<code>loss.grad_fn</code>属性，您将看到如下计算图：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">input</span> -&gt; conv2d -&gt; relu -&gt; maxpool2d -&gt; conv2d -&gt; relu -&gt; maxpool2d</span><br><span class="line">      -&gt; flatten -&gt; linear -&gt; relu -&gt; linear -&gt; relu -&gt; linear</span><br><span class="line">      -&gt; MSELoss</span><br><span class="line">      -&gt; loss</span><br></pre></td></tr></table></figure><p>所以，当我们使用<code>loss.backward()</code>，用神经网络参数和图中所有<code>requires_grad=True</code>的节点的<code>grad</code>张量将随梯度累积下去</p><p>为了进行说明，让我们进行几步反向传播：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(loss.grad_fn)  <span class="comment"># MSELoss</span></span><br><span class="line"><span class="built_in">print</span>(loss.grad_fn.next_functions[<span class="number">0</span>][<span class="number">0</span>])  <span class="comment"># Linear</span></span><br><span class="line"><span class="built_in">print</span>(loss.grad_fn.next_functions[<span class="number">0</span>][<span class="number">0</span>].next_functions[<span class="number">0</span>][<span class="number">0</span>])  <span class="comment"># ReLU</span></span><br></pre></td></tr></table></figure><p>out：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;MseLossBackward0 object at 0x7fc89a3b4c10&gt;</span><br><span class="line">&lt;AddmmBackward0 object at 0x7fc89a3b4400&gt;</span><br><span class="line">&lt;AccumulateGrad object at 0x7fc89a3b75b0&gt;</span><br></pre></td></tr></table></figure><h2 id="Backprop"><a href="#Backprop" class="headerlink" title="Backprop"></a>Backprop</h2><p>要反向传播错误，我们所要做的就是<code>loss.backward()</code>。但您需要清零现有梯度，否则梯度将会将累积。</p><p>现在我们使用<code>loss.backward()</code>，并比较反向传播前后conv1的梯度偏差。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">net.zero_grad()     <span class="comment"># zeroes the gradient buffers of all parameters</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;conv1.bias.grad before backward&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(net.conv1.bias.grad)</span><br><span class="line"></span><br><span class="line">loss.backward()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;conv1.bias.grad after backward&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(net.conv1.bias.grad)</span><br></pre></td></tr></table></figure><h2 id="更新权重"><a href="#更新权重" class="headerlink" title="更新权重"></a>更新权重</h2><p>实践中使用的最简单的更新规则是随机梯度下降（SGD）：</p><script type="math/tex; mode=display">weight = weight - learning_rate * gradient</script><p>我们可以使用简单的Python代码实现这一点：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">learning_rate = <span class="number">0.01</span></span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> net.parameters():</span><br><span class="line">    f.data.sub_(f.grad.data * learning_rate)</span><br></pre></td></tr></table></figure><p>然而，当您使用神经网络时，您需要使用各种不同的优化规则，如SGD、Nesterov-SGD、Adam、RMSProp等。为了实现这一点，pytorch提供了一个小程序包：<code>torch.optim</code>。它实现了所有这些方法。使用它非常简单：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"></span><br><span class="line"><span class="comment"># create your optimizer创建一个优化器</span></span><br><span class="line">optimizer = optim.SGD(net.parameters(), lr=<span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># in your training loop:</span></span><br><span class="line">optimizer.zero_grad()   <span class="comment"># zero the gradient buffers缓存梯度归零</span></span><br><span class="line">output = net(<span class="built_in">input</span>)</span><br><span class="line">loss = criterion(output, target)</span><br><span class="line">loss.backward()</span><br><span class="line">optimizer.step()    <span class="comment"># Does the update更新权重</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>数资组会</title>
+      <link href="/2022/12/04/%E5%8D%9A%E5%AE%A2%E5%86%99%E4%BD%9C/"/>
+      <url>/2022/12/04/%E5%8D%9A%E5%AE%A2%E5%86%99%E4%BD%9C/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="博客搭建"><a href="#博客搭建" class="headerlink" title="博客搭建"></a>博客搭建</h3><ul><li><a href="https://www.fomal.cc/posts/4aa2d85f.html">学会使用上传博客github仓库</a></li><li>渲染页面<br><a href="https://blog.csdn.net/qq_43740362/article/details/113783074?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522167015598816800182115960%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=167015598816800182115960&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-113783074-null-null.142^v67^control,201^v3^control_1,213^v2^t3_control2&amp;utm_term=butterfly%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%96&amp;spm=1018.2226.3001.4187">修改_config.butterfly.yml配置文件</a></li><li>挂载vercel。。好处：提高网站访问速度，可以拥有自己的域名</li><li>使用vscode更新自己的博客<br>输入<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get-ExecutionPolicy</span><br></pre></td></tr></table></figure>会显示是否有权限，1.若输出为Restricted则无法使用，2.若输出为RemoteSigned则可以直接在博客所有文件夹执行npm及hexo命令<br>若为1<br>输入<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ExecutionPolicy -Scope CurrentUser</span><br></pre></td></tr></table></figure>填入RemoteSigned<br>再次执行get-ExecutionPolicy，输出为2即为成功</li><li>常用命令<br>hexo clean(hexo cl)：删除之前生成的文件，若未生成过静态文件，可忽略此命令。</li></ul><p>hexo server (hexo s): 在本地生成预览界面，若<a href="http://localhost:4000/被占用，可以使用">http://localhost:4000/被占用，可以使用</a> hexo s -p 8000   </p><p>hexo generate(hexo g)：生成静态文章，可以用 hexo g 缩写</p><p>hexo deploy(hexo d)：部署文章，可以用 hexo d 缩写</p><p>常用组合<br>hexo cl + hexo s 在本地预览界面(预览界面会取决于本地文件，会随本地文件的改变而更新)<br>hexo cl + hexo g + hexo d 将本地文件上传至github仓库(仓库更新完成后可以在自己的博客网址看到更新后的博客)</p><h3 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h3><ul><li>基本md语法<br>支持<a href="https://www.aliyundrive.com/s/7ZDpZJsVnHC">tex数学语法</a><br>tex简单使用<br>标题：用不同数量的#来划分各等级标题<br>+ 可以用来作为分类<br>代码块：用```包裹表代码块<br>公式：分$包裹表公式块</li><li><a href="https://www.aliyundrive.com/s/75NRdXKH5et">下载typora</a><br>提取码：xg50</li><li>hexo中使用tex<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm un hexo-math</span><br><span class="line">npm un hexo-renderer-marked</span><br><span class="line">npm i hexo-renderer-pandoc</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>生成模型</title>
+      <link href="/2022/12/02/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/"/>
+      <url>/2022/12/02/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法，生成模型 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 生成模型，算法，学习路线 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>朴素贝叶斯法</title>
+      <link href="/2022/11/29/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/"/>
+      <url>/2022/11/29/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="朴素贝叶斯基本知识"><a href="#朴素贝叶斯基本知识" class="headerlink" title="朴素贝叶斯基本知识"></a>朴素贝叶斯基本知识</h3><p><img src="/image/朴素贝叶斯/1.png" alt=""></p><h3 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h3><p><img src="/image/朴素贝叶斯/2.png" alt=""></p><h3 id="贝叶斯估计"><a href="#贝叶斯估计" class="headerlink" title="贝叶斯估计"></a>贝叶斯估计</h3><p><img src="/image/朴素贝叶斯/3.png" alt=""></p><h3 id="算法过程"><a href="#算法过程" class="headerlink" title="算法过程"></a>算法过程</h3><ul><li>1.计算先验概率和条件概率</li><li>2.计算贝叶斯公式的各类值</li><li>3.求得最大的类<h3 id="题目及求解"><a href="#题目及求解" class="headerlink" title="题目及求解"></a>题目及求解</h3><img src="/image/朴素贝叶斯/4.png" alt=""><br>极大似然估计<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line"></span><br><span class="line">X = np.array([[1,1,1,1,1,2,2,2,2,2,3,3,3,3,3],[&#x27;S&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;S&#x27;,&#x27;S&#x27;,&#x27;S&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;L&#x27;,&#x27;L&#x27;,&#x27;L&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;L&#x27;,&#x27;L&#x27;]])</span><br><span class="line">Y = np.array([-1,-1,1,1,-1,-1,-1,1,1,1,1,1,1,1,-1])</span><br><span class="line"></span><br><span class="line">#数据处理，转为独热编码</span><br><span class="line">enc = OneHotEncoder()</span><br><span class="line">enc.fit(X.T)</span><br><span class="line">categories = enc.categories_ #标签</span><br><span class="line">X_ =enc.transform(X.T).toarray()</span><br><span class="line"></span><br><span class="line">enc_ = OneHotEncoder()</span><br><span class="line">enc_.fit(Y.reshape(15,1))</span><br><span class="line">cat_y = enc_.categories_ #y的标签</span><br><span class="line">Y_ = enc_.transform(Y.reshape(15,1)).toarray()</span><br><span class="line"></span><br><span class="line">#求P_y</span><br><span class="line">n_y = []</span><br><span class="line">l = len(Y)</span><br><span class="line">Y_label = np.unique(Y)</span><br><span class="line">for i in range(len(Y_label)):</span><br><span class="line">    n_y.append(np.sum(0 + (Y==Y_label[i])))</span><br><span class="line">P_y = np.array(n_y)/l</span><br><span class="line"></span><br><span class="line">#极大似然法求条件概率</span><br><span class="line">def recursion(x,X_,Y_):</span><br><span class="line">   X_x = X_[:,x]</span><br><span class="line">   P_xy = []</span><br><span class="line">   for i in range(len(Y_[0])):</span><br><span class="line">     p_xy = [np.sum((0+((Y_[:,i]+X_x[:,j])==2)))/np.sum(((Y_[:,i]!=0)+0)) for j in range(len(x))]</span><br><span class="line">     z = 1</span><br><span class="line">     for i in p_xy:</span><br><span class="line">       z=z*i</span><br><span class="line">     P_xy.append(z)  </span><br><span class="line">   return P_xy</span><br><span class="line">     </span><br><span class="line">P = recursion([1,5],X_,Y_)*P_y #输入x时记得是从0记起</span><br><span class="line">cat_y[0][np.argmax(P)] # y的标签</span><br></pre></td></tr></table></figure>贝叶斯估计<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line"></span><br><span class="line">X = np.array([[1,1,1,1,1,2,2,2,2,2,3,3,3,3,3],[&#x27;S&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;S&#x27;,&#x27;S&#x27;,&#x27;S&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;L&#x27;,&#x27;L&#x27;,&#x27;L&#x27;,&#x27;M&#x27;,&#x27;M&#x27;,&#x27;L&#x27;,&#x27;L&#x27;]])</span><br><span class="line">Y = np.array([-1,-1,1,1,-1,-1,-1,1,1,1,1,1,1,1,-1])</span><br><span class="line"></span><br><span class="line">#数据处理，转为独热编码</span><br><span class="line">enc = OneHotEncoder()</span><br><span class="line">enc.fit(X.T)</span><br><span class="line">categories = enc.categories_ #标签</span><br><span class="line">X_ =enc.transform(X.T).toarray()</span><br><span class="line"></span><br><span class="line">enc_ = OneHotEncoder()</span><br><span class="line">enc_.fit(Y.reshape(15,1))</span><br><span class="line">cat_y = enc_.categories_ #y的标签</span><br><span class="line">Y_ = enc_.transform(Y.reshape(15,1)).toarray()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#贝叶斯估计  </span><br><span class="line">def recursion_be(x,x_l,X_,Y_,lbd): </span><br><span class="line">   #求p_x</span><br><span class="line">   x_t = x</span><br><span class="line">   for i in range(1,len(x)):</span><br><span class="line">     x_t[i] = x[i] + x_l[i-1] </span><br><span class="line">   X_x = X_[:,x_t]</span><br><span class="line">   P_xy = []</span><br><span class="line">   for i in range(len(Y_[0])):</span><br><span class="line">     p_xy = [(np.sum(0+((Y_[:,i]+X_x[:,j])==2))+lbd)/(np.sum(((Y_[:,i]!=0)+0))+x[j]*lbd) for j in range(len(x))]</span><br><span class="line">     z = 1</span><br><span class="line">     for i in p_xy:</span><br><span class="line">       z=z*i</span><br><span class="line">     P_xy.append(z)</span><br><span class="line"></span><br><span class="line">   #求p_y</span><br><span class="line">   n_y = []</span><br><span class="line">   l = len(Y)</span><br><span class="line">   Y_label = np.unique(Y)</span><br><span class="line">   P_y = []</span><br><span class="line">   for i in range(len(Y_label)):</span><br><span class="line">      P_y.append((np.sum(0 + (Y==Y_label[i]))+lbd)/(l+lbd*i))        </span><br><span class="line">   return np.array(P_xy)*np.array(P_y)  </span><br><span class="line"></span><br><span class="line">P = recursion_be([1,2],[3,3],X_,Y_,1) #输入x时记得是从每个特征的0开始记起,x_l为每个特征的长度</span><br><span class="line">cat_y[0][np.argmax(P)] # y的标签</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法，朴素贝叶斯 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 朴素贝叶斯 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>EM算法</title>
+      <link href="/2022/11/29/EM/"/>
+      <url>/2022/11/29/EM/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法，马尔可夫模型，EM </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 马尔可夫链，EM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>机器学习背景</title>
+      <link href="/2022/11/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%83%8C%E6%99%AF/"/>
+      <url>/2022/11/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%83%8C%E6%99%AF/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/image/机器学习背景/1.png" alt=""></p><ul><li>Hmm为概率图模型中的Dynamic Model(动态模型)</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 背景知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> 背景知识 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>隐马尔可夫模型</title>
+      <link href="/2022/11/28/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/"/>
+      <url>/2022/11/28/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/image/HMM/1.png" alt=""></p><h3 id="i"><a href="#i" class="headerlink" title="(i)"></a>(i)</h3><ul><li>初始概率分布即状态序列初始时刻状态值$i_1$的状态概率$q_1$</li><li>转移矩阵可以看成相邻两个时刻状态概率的关系在已知<script type="math/tex">i_{t-1}</script>的概率分布情况下，<script type="math/tex">q_{i_{t}}</script>的概率分布(就是条件概率)</li><li>发射矩阵可以看成序列I和O之间概率分布的关系，在已知I的概率分布的情况下，O的概率分布</li></ul><h3 id="ii"><a href="#ii" class="headerlink" title="(ii)"></a>(ii)</h3><ul><li>齐次Markov: 任意时刻的状态值概率分布(非初始)只与上一时刻相关</li><li>观察独立: $o_j$的概率分布只与$i_j$的有关</li></ul><h3 id="iii"><a href="#iii" class="headerlink" title="(iii)"></a>(iii)</h3><ul><li>evluation: 已知模型参数，求某时刻观测值概率分布(易)</li><li>learning: 求令o概率分布均值(or其他指标)最大的模型 (难)</li><li>Decoding: 已知O，求令I概率分布某概率值(指标)最大的模型 (中)</li></ul><h3 id="概率计算算法-evaluation"><a href="#概率计算算法-evaluation" class="headerlink" title="概率计算算法(evaluation)"></a>概率计算算法(evaluation)</h3><ul><li>直接计算法(原理上可行，但计算量过大)<br><img src="/image/HMM/2.png" alt=""></li><li>前向算法(复杂度:$O(TN^2)$)<ul><li>前向概率: 给定马尔可夫模型$\lambda$，定义到时刻t部分观测序列为$o_1,o_2…o_t$且状态为$q_i$的概率为前向概率，记作:<script type="math/tex; mode=display">\alpha_{t}(i) = P(o_1,o_2...o_t,i_t=q_i|\lambda)</script>证明:<br><img src="/image/HMM/3.png" alt=""><br>算法过程:<br><img src="/image/HMM/4.png" alt=""><br>题目及解答:<br><img src="/image/HMM/5.png" alt=""><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">A = np.array([[0.5,0.2,0.3],[0.3,0.5,0.2],[0.2,0.3,0.5]])</span><br><span class="line">B = np.array([[0.5,0.5],[0.4,0.6],[0.7,0.3]])</span><br><span class="line">pi = np.array([0.2,0.4,0.4])#观测序列的值</span><br><span class="line">O = [0,1,0]</span><br><span class="line">alpha_1 = ((B.T[O[0]])*pi)</span><br><span class="line">def reduction(alpha,A,B,i):</span><br><span class="line">    return  np.sum(np.dot(alpha,A)*A,axis=0)*(B.T[i])</span><br><span class="line">def recursion(alpha,A,B,O,T):#T为时间长度</span><br><span class="line">    for i in range(T-1):</span><br><span class="line">        alpha = reduction(alpha,A,B,O[i+1])</span><br><span class="line">    return  alpha      </span><br><span class="line">np.sum(recursion(alpha_1,A,B,O,3))    </span><br></pre></td></tr></table></figure></li></ul></li><li>后向算法<ul><li>后向概率:给定HMM模型$\lambda$，定义在时刻t状态状态为$q_i$的条件下，从$t-1$到T的部分观测序列为的概率为后向概率，记作<script type="math/tex; mode=display">\beta_t(i) = p(o_{t+1},o_{t+2},...o_{T}|i_t=q_i,\lambda)</script>证明:<br><img src="/image/HMM/6.png" alt=""><br>算法过程<br><img src="/image/HMM/7.png" alt=""><br>题目及解答<br>题目为前向算法中题目<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">A = np.array([[0.5,0.2,0.3],[0.3,0.5,0.2],[0.2,0.3,0.5]])</span><br><span class="line">B = np.array([[0.5,0.5],[0.4,0.6],[0.7,0.3]])</span><br><span class="line">pi = np.array([0.2,0.4,0.4])#观测序列的值</span><br><span class="line">O = [0,1,0]</span><br><span class="line">beta_T = [1,1,1]</span><br><span class="line">def reduction(beta,A,B,i):</span><br><span class="line">    return np.sum(A*(B.T[i])*beta,axis = 1)</span><br><span class="line">def recursion(beta,A,B,O,T):</span><br><span class="line">    for i in range(T-1):</span><br><span class="line">        beta = reduction(beta,A,B,O[-(i+1)])</span><br><span class="line">    return beta  </span><br><span class="line">np.sum(pi*(B.T[O[0]])*recursion(beta_T,A,B,O,3))</span><br></pre></td></tr></table></figure></li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法，马尔可夫模型 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 马尔可夫模型 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>马尔可夫链</title>
+      <link href="/2022/11/27/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/"/>
+      <url>/2022/11/27/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="马尔科夫链"><a href="#马尔科夫链" class="headerlink" title="马尔科夫链"></a>马尔科夫链</h3><ul><li><p>定义</p><p>对于一个随机变量的序列</p><script type="math/tex; mode=display">x=\{x_0,x_1...x_{n-1},x_n\}</script><p>对于$t∈[0,n]$，$x_t$的取值空间(记为状态空间S)，随机变量可以是离散的，也可以是连续的，X的构成为随机过程 </p><p>假设$0$时刻随机变量<script type="math/tex">x_{0}</script>遵循<script type="math/tex">p(x_0)=p_0</script>,记为初始状态分布。任意<script type="math/tex">x_t</script>只取决于<script type="math/tex">x_{t-1}</script>(一阶),这一性质称为马尔科夫性 </p></li></ul><script type="math/tex; mode=display">p(x_t|x_{t-1},...x_2,x_1)=p(x_t|x_{t-1})</script><ul><li><p>(一个马尔科夫过程就是指过程中的每个状态的转移只依赖于之前的 n个状态，这个过程被称为 n阶马尔科夫模型，其中 n是影响转移状态的数目,但常用1阶马尔可夫过程，故马尔可夫过程一般指一阶马尔可夫过程)</p></li><li><p>转移概率<br>马尔可夫链可以用条件概率模型来描述。我们把在前一时刻某取值下当前时刻取值的条件概率称作转移概率.</p><script type="math/tex; mode=display">p(x_t|x_{t-1})</script></li><li><p>状态转移矩阵</p><p>假定S中有k个取值$y_1,y_2…y_k$,</p><p>则从任一时刻到下一时刻得所有可能概率可构成状态转移矩阵。</p><p>设从状态<script type="math/tex">y_a</script>转移到<script type="math/tex">y_b</script>的概率为<script type="math/tex">p_{ab}</script></p></li></ul><script type="math/tex; mode=display">\begin{equation}p = \left[\begin{array}{cccc}p_{11}&p_{12}&...&p_{1k}\\p_{21}&p_{22}&...&p_{2k}\\...&...&...&...\\p_{k1}&p_{k2}&...&p_{kk}\\\end{array}\right]\end{equation}</script><ul><li><p>马尔可夫链模型状态概率具有稳定性</p><p>若初始状态A的各状态概率为$p_1=[p_1,P_2…p_k]$</p><p>两个时刻后各状态概率为$P_1*P^2$</p><p>n个时刻后的概率分布$p_n=p_1*p^n$</p><p>实验证明当n足够大时，$p_n$不再变化</p></li></ul><script type="math/tex; mode=display">p_{n+1}=p_{n}p=p_1p^n</script><p><img src="/image/8.png" alt=""></p><ul><li><p>数学证明：<br><img src="/image/9.png" alt="可以用特征分解把矩阵转化为$DAD^T$的形式"><br><img src="/image/10.png" alt=""></p></li><li><p>马尔可夫模型解题过程</p><ul><li>统计获得状态转移矩阵</li><li>计算足够长时间后时刻的状态概率，特定时间状态概率…</li></ul></li></ul><p><a href="https://blog.csdn.net/qq_27825451/article/details/100117715">参考博客</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法，马尔可夫模型 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 马尔可夫模型 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+    
+    
+    <entry>
+      <title>About</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Music</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><!-- <script>console.error("SyntaxError: Unexpected token 【 in JSON at position 6");</script> -->]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Image</title>
+      <link href="/image/index.html"/>
+      <url>/image/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Movie</title>
+      <link href="/movie/index.html"/>
+      <url>/movie/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+  
+</search>
