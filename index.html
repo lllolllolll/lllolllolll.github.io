@@ -1,176 +1,354 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>cdのblog - 进入cd的小家</title><meta name="author" content="lll"><meta name="copyright" content="lll"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="just do">
-<meta property="og:type" content="website">
-<meta property="og:title" content="cdのblog">
-<meta property="og:url" content="https://www.lll2333.xyz/index.html">
-<meta property="og:site_name" content="cdのblog">
-<meta property="og:description" content="just do">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://www.lll2333.xyz/image/5.png">
-<meta property="article:author" content="lll">
-<meta property="article:tag" content="算法，博客">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.lll2333.xyz/image/5.png"><link rel="shortcut icon" href="/image/2.png"><link rel="canonical" href="https://www.lll2333.xyz/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
-  root: '/',
-  algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
-  translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
-  copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  date_suffix: {
-    just: 'Just',
-    min: 'minutes ago',
-    hour: 'hours ago',
-    day: 'days ago',
-    month: 'months ago'
-  },
-  copyright: {"limitCount":50,"languages":{"author":"Author: lll","link":"Link: ","source":"Source: cdのblog","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source."}},
-  lightbox: 'mediumZoom',
-  Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
-  },
-  isPhotoFigcaption: false,
-  islazyload: false,
-  isAnchor: false
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'cdのblog',
-  isPost: false,
-  isHome: true,
-  isHighlightShrink: false,
-  isToc: false,
-  postUpdate: '2024-03-23 23:06:19'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>合约交易策略管理</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        .container { max-width: 1200px; margin: 20px auto; padding: 20px; }
+        .section { margin-bottom: 30px; padding: 20px; border: 1px solid #eee; border-radius: 8px; }
+        .input-group { display: grid; grid-template-columns: 150px 1fr; gap: 15px; margin-bottom: 15px; }
+        label { line-height: 32px; }
+        input, select { padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; }
+        button { margin-right: 10px; padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        .readonly { background: #f8f9fa; }
+        /* 新增样式 */
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px; /* 元素间距 */
+            margin-bottom: 16px;
         }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
-    }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
         
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
+        .input-group-2 {
+            display: flex;
+            align-items: center;
+            min-width: 200px; /* 最小宽度 */
+            flex: 1 1 auto;
         }
-      }
-    
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/5.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movie/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li><li><a class="site-page child" href="/image/"><i class="fa-fw fas fa-images"></i><span> image</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/image/1.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">cdのblog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movie/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li><li><a class="site-page child" href="/image/"><i class="fa-fw fas fa-images"></i><span> image</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">cdのblog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/lllolllolll" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lll23332021@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/2024/03/23/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/" title="生成模型"><img class="post_bg" src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="生成模型"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/03/23/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/" title="生成模型">生成模型</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-03-23T14:55:06.333Z" title="Created 2024-03-23 22:55:06">2024-03-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95%EF%BC%8C%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/">算法，生成模型</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%EF%BC%8C%E7%AE%97%E6%B3%95%EF%BC%8C%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/">生成模型，算法，学习路线</a></span></div><div class="content"></div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2024/03/23/%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" title="对比分析"><img class="post_bg" src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="对比分析"></a></div><div class="recent-post-info"><a class="article-title" href="/2024/03/23/%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" title="对比分析">对比分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-03-23T14:31:20.393Z" title="Created 2024-03-23 22:31:20">2024-03-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%EF%BC%8C%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">统计学，对比分析，数据分析</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/">统计学</a></span></div><div class="content"></div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/03/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="No title"><img class="post_bg" src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="No title"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/03/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="No title">No title</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-03-17T06:56:28.918Z" title="Created 2023-03-17 14:56:28">2023-03-17</time></span></div><div class="content"></div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/12/04/%E5%8D%9A%E5%AE%A2%E5%86%99%E4%BD%9C/" title="数资组会"><img class="post_bg" src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数资组会"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/12/04/%E5%8D%9A%E5%AE%A2%E5%86%99%E4%BD%9C/" title="数资组会">数资组会</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-12-04T12:08:28.643Z" title="Created 2022-12-04 20:08:28">2022-12-04</time></span></div><div class="content"></div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/12/02/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" title="生成模型"><img class="post_bg" src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="生成模型"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/12/02/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" title="生成模型">生成模型</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-12-02T07:36:38.501Z" title="Created 2022-12-02 15:36:38">2022-12-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95%EF%BC%8C%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/">算法，生成模型</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%EF%BC%8C%E7%AE%97%E6%B3%95%EF%BC%8C%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/">生成模型，算法，学习路线</a></span></div><div class="content"></div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/11/29/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/" title="朴素贝叶斯法"><img class="post_bg" src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="朴素贝叶斯法"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/11/29/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/" title="朴素贝叶斯法">朴素贝叶斯法</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-11-29T09:39:23.040Z" title="Created 2022-11-29 17:39:23">2022-11-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95%EF%BC%8C%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/">算法，朴素贝叶斯</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/">朴素贝叶斯</a></span></div><div class="content"></div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/11/29/EM/" title="EM算法"><img class="post_bg" src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EM算法"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/11/29/EM/" title="EM算法">EM算法</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-11-28T16:38:05.523Z" title="Created 2022-11-29 00:38:05">2022-11-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95%EF%BC%8C%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%8CEM/">算法，马尔可夫模型，EM</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE%EF%BC%8CEM/">马尔可夫链，EM</a></span></div><div class="content"></div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/11/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%83%8C%E6%99%AF/" title="机器学习背景"><img class="post_bg" src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="机器学习背景"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/11/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%83%8C%E6%99%AF/" title="机器学习背景">机器学习背景</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-11-27T17:01:28.481Z" title="Created 2022-11-28 01:01:28">2022-11-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86/">背景知识</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86/">背景知识</a></span></div><div class="content"></div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/11/28/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/" title="隐马尔可夫模型"><img class="post_bg" src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="隐马尔可夫模型"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/11/28/%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/" title="隐马尔可夫模型">隐马尔可夫模型</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-11-27T16:27:58.281Z" title="Created 2022-11-28 00:27:58">2022-11-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95%EF%BC%8C%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/">算法，马尔可夫模型</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/">马尔可夫模型</a></span></div><div class="content"></div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/11/27/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/" title="马尔可夫链"><img class="post_bg" src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="马尔可夫链"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/11/27/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/" title="马尔可夫链">马尔可夫链</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-11-26T18:18:26.770Z" title="Created 2022-11-27 02:18:26">2022-11-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95%EF%BC%8C%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/">算法，马尔可夫模型</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/">马尔可夫模型</a></span></div><div class="content"></div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/5.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">lll</div><div class="author-info__description">just do</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lllolllolll" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lll23332021@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/03/23/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/" title="生成模型"><img src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="生成模型"/></a><div class="content"><a class="title" href="/2024/03/23/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/" title="生成模型">生成模型</a><time datetime="2024-03-23T14:55:06.333Z" title="Created 2024-03-23 22:55:06">2024-03-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/23/%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" title="对比分析"><img src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="对比分析"/></a><div class="content"><a class="title" href="/2024/03/23/%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" title="对比分析">对比分析</a><time datetime="2024-03-23T14:31:20.393Z" title="Created 2024-03-23 22:31:20">2024-03-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="No title"><img src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="No title"/></a><div class="content"><a class="title" href="/2023/03/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="No title">No title</a><time datetime="2023-03-17T06:56:28.918Z" title="Created 2023-03-17 14:56:28">2023-03-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/04/%E5%8D%9A%E5%AE%A2%E5%86%99%E4%BD%9C/" title="数资组会"><img src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数资组会"/></a><div class="content"><a class="title" href="/2022/12/04/%E5%8D%9A%E5%AE%A2%E5%86%99%E4%BD%9C/" title="数资组会">数资组会</a><time datetime="2022-12-04T12:08:28.643Z" title="Created 2022-12-04 20:08:28">2022-12-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/02/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" title="生成模型"><img src="/image/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="生成模型"/></a><div class="content"><a class="title" href="/2022/12/02/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" title="生成模型">生成模型</a><time datetime="2022-12-02T07:36:38.501Z" title="Created 2022-12-02 15:36:38">2022-12-02</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
-            <i class="fas fa-folder-open"></i>
-            <span>Categories</span>
-            
+        
+        .input-group-2 label {
+            flex: 0 0 100px; /* 固定标签宽度 */
+            margin-right: 8px;
+            text-align: right;
+        }
+        
+        .input-group-2 input.readonly {
+            flex: 1;
+            min-width: 120px; /* 输入框最小宽度 */
+            padding: 6px 8px;
+            border: 0;
+            background: #f8f9fa;
+            box-shadow: none;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <!-- 索引项 -->
+        <div class="section">
+            <div class="input-group">
+                <label>所有合约交易对</label>
+                <select v-model="selectedPair" @change="fetchData">
+                    <option v-for="pair in pairs" :value="pair">{{pair}}</option>
+                </select>
             </div>
-            <ul class="card-category-list" id="aside-cat-list">
-            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%AE%97%E6%B3%95%EF%BC%8C%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/"><span class="card-category-list-name">算法，朴素贝叶斯</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%AE%97%E6%B3%95%EF%BC%8C%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/"><span class="card-category-list-name">算法，生成模型</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%AE%97%E6%B3%95%EF%BC%8C%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/"><span class="card-category-list-name">算法，马尔可夫模型</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%AE%97%E6%B3%95%EF%BC%8C%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%EF%BC%8CEM/"><span class="card-category-list-name">算法，马尔可夫模型，EM</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%EF%BC%8C%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"><span class="card-category-list-name">统计学，对比分析，数据分析</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86/"><span class="card-category-list-name">背景知识</span><span class="card-category-list-count">1</span></a></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" style="font-size: 1.1em; color: #999">朴素贝叶斯</a> <a href="/tags/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%EF%BC%8C%E7%AE%97%E6%B3%95%EF%BC%8C%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" style="font-size: 1.5em; color: #99a9bf">生成模型，算法，学习路线</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">算法</a> <a href="/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/" style="font-size: 1.1em; color: #999">统计学</a> <a href="/tags/%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86/" style="font-size: 1.1em; color: #999">背景知识</a> <a href="/tags/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B/" style="font-size: 1.5em; color: #99a9bf">马尔可夫模型</a> <a href="/tags/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE%EF%BC%8CEM/" style="font-size: 1.1em; color: #999">马尔可夫链，EM</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">March 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/03/"><span class="card-archive-list-date">March 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/12/"><span class="card-archive-list-date">December 2022</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/11/"><span class="card-archive-list-date">November 2022</span><span class="card-archive-list-count">5</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">10</div></div><div class="webinfo-item"><div class="item-name">Total Count :</div><div class="item-count">3.6k</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Push :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-03-23T15:06:19.486Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/image/1.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By lll</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="Chat"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function subtitleType () {
-  if (true) { 
-    window.typed = new Typed("#subtitle", {
-      strings: ["good morning or envening","welcome to cdのhome","have a nice trip"],
-      startDelay: 300,
-      typeSpeed: 150,
-      loop: false,
-      backSpeed: 50
-    })
-  } else {
-    document.getElementById("subtitle").innerHTML = 'good morning or envening'
-  }
-}
+            <div class="input-group">
+                <label>交易所</label>
+                <select v-model="exchange" @change="fetchData">
+                    <option v-for="exchange in exchanges" :value="exchange">{{exchange}}</option>
+                </select>
+            </div>
+        </div>
 
-if (true) {
-  if (typeof Typed === 'function') {
-    subtitleType()
-  } else {
-    getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js').then(subtitleType)
-  }
-} else {
-  subtitleType()
-}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
-POWERMODE.shake = true;
-POWERMODE.mobile = false;
-document.body.addEventListener('input', POWERMODE);
-</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+        <div class="section">
+            <div class="input-row">  <!-- 新增行容器 -->
+                <div class="input-group-2">
+                    <label>初始价格</label>
+                    <input type="text" :value="initialPrice" readonly class="readonly">
+                </div>
+                <div class="input-group-2">
+                    <label>实时市价</label>
+                    <input type="text" :value="marketPrice" readonly class="readonly">
+                </div>
+                <div class="input-group-2">
+                    <label>目前状态</label>
+                    <input type="text" :value="status" readonly class="readonly">
+                </div>
+                <div class="input-group-2">
+                    <label>0軸價格</label>
+                    <input type="text" :value="axisPrice" readonly class="readonly">
+                </div>
+            </div>
+            <!-- 其他不可调整项... -->
+        </div>
+        
+        
+
+        <!-- 可调整项 -->
+        <div class="section">
+            <div class="input-group">
+                <label>方向</label>
+                <select v-model="side" class="read_write">
+                    <option value="多">多</option>
+                    <option value="空">空</option>
+                </select>
+                <label>触发启动价格(%)</label>
+                <input type="number" v-model="Activation_Price" min ="0" oninput="if(value<-100 || value >100)value=0" />                            
+                <label>触发停止价格(%)</label>
+                <input type="number" v-model="Termination_Price" min="0" oninput="if(value<-100 || value >100)value=0" />
+                <label>首仓金额/加仓金额</label>
+                <input type="number" v-model="num_Initial" min="1" oninput="if(value<0)value=0" />
+                <label> 加仓金额</label>
+                <input type="number" v-model="num_Additional" min="0" oninput="if(value<0)value=0" />
+                <label>加仓比例(%)</label>
+                <input type="number" v-model="Ratio"  oninput="if(value<0)value=0" />
+                <label>网格间距(%)</label>
+                <input type="number" v-model="len_Grid" class="read_write" oninput="if(value<-100 || value >100)value=0" />
+                <label>间距比例(%)</label>
+                <input type="number" v-model="Interval_Proportion" class="read_write" oninput="if(value<0)value=0" />
+                <label>限价单笔数</label> 
+                <input type="text" v-model="num_Limit" class="read_write" oninput="if(value<0)value=0" />
+            </div>
+            <!-- 其他可调整项... -->
+        </div> 
+
+
+        <!-- 按钮 -->
+        <div class="section">
+            <button @click="fetchData">查询</button>
+            <button @click="startStrategy">启动</button>
+            <button @click="outStrategy">清仓停止</button>
+            <button @click="stopStrategy">暂停</button>
+            <button @click="endStrategy">停止</button> 
+            <!-- 其他按钮... -->
+        </div>
+
+        <!-- 启动中策略 -->
+        <div class="section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>合约交易对</th>
+                        <th>交易所</th>
+                        <th>初始价格</th>
+                        <th>实时市价</th>
+                        <th>0抽价格</th>
+                        <th>多空方向</th>
+                        <th>首仓价格</th>
+                        <th>加仓价格</th>
+                        <th>加仓比例</th>
+                        <th>网格间距</th>
+                        <th>间距比例</th>
+                        <th>限价单笔数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="strategy in activeStrategies" :key="strategy.pair">
+                        <td>{{ strategy.pair }}</td>
+                        <td>{{ strategy.exchange }}</td>
+                        <td>{{ strategy.initialPrice }}</td>
+                        <td>{{ strategy.marketPrice }}</td>
+                        <td>{{ strategy.axisPrice }}</td>
+                        <td>{{ strategy.side }}</td>
+                        <td>{{ strategy.num_Initial }}</td>
+                        <td>{{ strategy.num_Additional }}</td>
+                        <td>{{ strategy.Ratio }}</td>
+                        <td>{{ strategy.len_Grid }}</td>
+                        <td>{{ strategy.Interval_Proportion }}</td>
+                        <td>{{ strategy.num_Limit }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        axios.defaults.baseURL = 'http://43.134.114.73:8888';
+        new Vue({
+            el: '#app',
+            data: {
+                selectedPair: 'BTC-USDT-SWAP',
+                pairs: ['BTC-USDT-SWAP', 'ETH-USDT-SWAP', 'SOL-USDT-SWAP', 'TON-USDT-SWAP', 'DOGE-USDT-SWAP', 'XRP-USDT-SWAP', 'PI-USDT-SWAP', 'TRUMP-USDT-SWAP', 'IP-USDT-SWAP', '1INCH-USDT-SWAP', 'AAVE-USDT-SWAP', 'ACE-USDT-SWAP', 'ACH-USDT-SWAP', 'ACT-USDT-SWAP', 'ADA-USDT-SWAP', 'AEVO-USDT-SWAP', 'AGLD-USDT-SWAP', 'AI16Z-USDT-SWAP', 'AIDOGE-USDT-SWAP', 'AIXBT-USDT-SWAP', 'ALCH-USDT-SWAP', 'ALGO-USDT-SWAP', 'ALPHA-USDT-SWAP', 'ANIME-USDT-SWAP', 'APE-USDT-SWAP', 'API3-USDT-SWAP', 'APT-USDT-SWAP', 'AR-USDT-SWAP', 'ARB-USDT-SWAP', 'ARC-USDT-SWAP', 'ARKM-USDT-SWAP', 'ATH-USDT-SWAP', 'ATOM-USDT-SWAP', 'AUCTION-USDT-SWAP', 'AVAX-USDT-SWAP', 'AVAAI-USDT-SWAP', 'AXS-USDT-SWAP', 'BADGER-USDT-SWAP', 'BAL-USDT-SWAP', 'BAND-USDT-SWAP', 'BAT-USDT-SWAP', 'BCH-USDT-SWAP', 'BERA-USDT-SWAP', 'BICO-USDT-SWAP', 'BIGTIME-USDT-SWAP', 'BIO-USDT-SWAP', 'BLUR-USDT-SWAP', 'BNB-USDT-SWAP', 'BNT-USDT-SWAP', 'BOME-USDT-SWAP', 'BONK-USDT-SWAP', 'BRETT-USDT-SWAP', 'BSV-USDT-SWAP', 'BUZZ-USDT-SWAP', 'CAT-USDT-SWAP', 'CATI-USDT-SWAP', 'CELO-USDT-SWAP', 'CETUS-USDT-SWAP', 'CFX-USDT-SWAP', 'CHZ-USDT-SWAP', 'COMP-USDT-SWAP', 'COOKIE-USDT-SWAP', 'CORE-USDT-SWAP', 'CRO-USDT-SWAP', 'CRV-USDT-SWAP', 'CSPR-USDT-SWAP', 'CTC-USDT-SWAP', 'CVC-USDT-SWAP', 'CVX-USDT-SWAP', 'DEGEN-USDT-SWAP', 'DGB-USDT-SWAP', 'DOGS-USDT-SWAP', 'DOG-USDT-SWAP', 'DOT-USDT-SWAP', 'DUCK-USDT-SWAP', 'DYDX-USDT-SWAP', 'EGLD-USDT-SWAP', 'EIGEN-USDT-SWAP', 'ENJ-USDT-SWAP', 'ENS-USDT-SWAP', 'EOS-USDT-SWAP', 'ETC-USDT-SWAP', 'ETHW-USDT-SWAP', 'ETHFI-USDT-SWAP', 'FARTCOIN-USDT-SWAP', 'FIL-USDT-SWAP', 'FLM-USDT-SWAP', 'FLOKI-USDT-SWAP', 'FLOW-USDT-SWAP', 'FOXY-USDT-SWAP', 'FXS-USDT-SWAP', 'GALA-USDT-SWAP', 'GAS-USDT-SWAP', 'GLM-USDT-SWAP', 'GMT-USDT-SWAP', 'GMX-USDT-SWAP', 'GOAT-USDT-SWAP', 'GODS-USDT-SWAP', 'GPS-USDT-SWAP', 'GRASS-USDT-SWAP', 'GRIFFAIN-USDT-SWAP', 'GRT-USDT-SWAP', 'HBAR-USDT-SWAP', 'HMSTR-USDT-SWAP', 'HYPE-USDT-SWAP', 'ICP-USDT-SWAP', 'ICX-USDT-SWAP', 'ID-USDT-SWAP', 'IMX-USDT-SWAP', 'INJ-USDT-SWAP', 'IOST-USDT-SWAP', 'IOTA-USDT-SWAP', 'J-USDT-SWAP', 'JOE-USDT-SWAP', 'JST-USDT-SWAP', 'JTO-USDT-SWAP', 'JUP-USDT-SWAP', 'KAITO-USDT-SWAP', 'KISHU-USDT-SWAP', 'KNC-USDT-SWAP', 'KSM-USDT-SWAP', 'LAYER-USDT-SWAP', 'LDO-USDT-SWAP', 'LINK-USDT-SWAP', 'LOOKS-USDT-SWAP', 'LPT-USDT-SWAP', 'LQTY-USDT-SWAP', 'LRC-USDT-SWAP', 'LSK-USDT-SWAP', 'LTC-USDT-SWAP', 'LUNA-USDT-SWAP', 'LUNC-USDT-SWAP', 'MAGIC-USDT-SWAP', 'MAJOR-USDT-SWAP', 'MANA-USDT-SWAP', 'MASK-USDT-SWAP', 'MAX-USDT-SWAP', 'ME-USDT-SWAP', 'MEME-USDT-SWAP', 'MEMEFI-USDT-SWAP', 'MERL-USDT-SWAP', 'METIS-USDT-SWAP', 'MEW-USDT-SWAP', 'MINA-USDT-SWAP', 'MKR-USDT-SWAP', 'MOODENG-USDT-SWAP', 'MORPHO-USDT-SWAP', 'MOVR-USDT-SWAP', 'MOVE-USDT-SWAP', 'NC-USDT-SWAP', 'NEAR-USDT-SWAP', 'NEIROETH-USDT-SWAP', 'NEIRO-USDT-SWAP', 'NEO-USDT-SWAP', 'NFT-USDT-SWAP', 'NMR-USDT-SWAP', 'NOT-USDT-SWAP', 'OL-USDT-SWAP', 'OM-USDT-SWAP', 'ONDO-USDT-SWAP', 'ONE-USDT-SWAP', 'ONT-USDT-SWAP', 'OP-USDT-SWAP', 'ORBS-USDT-SWAP', 'ORDI-USDT-SWAP', 'PENGU-USDT-SWAP', 'PEOPLE-USDT-SWAP', 'PEPE-USDT-SWAP', 'PERP-USDT-SWAP', 'PIPPIN-USDT-SWAP', 'PNUT-USDT-SWAP', 'POL-USDT-SWAP', 'POPCAT-USDT-SWAP', 'PRCL-USDT-SWAP', 'PUFFER-USDT-SWAP', 'PYTH-USDT-SWAP', 'QTUM-USDT-SWAP', 'RAY-USDT-SWAP', 'RDNT-USDT-SWAP', 'RENDER-USDT-SWAP', 'RON-USDT-SWAP', 'RSR-USDT-SWAP', 'RVN-USDT-SWAP', 'S-USDT-SWAP', 'SAND-USDT-SWAP', 'SATS-USDT-SWAP', 'SCR-USDT-SWAP', 'SHELL-USDT-SWAP', 'SHIB-USDT-SWAP', 'SLERF-USDT-SWAP', 'SLP-USDT-SWAP', 'SNX-USDT-SWAP', 'SOLV-USDT-SWAP', 'SONIC-USDT-SWAP', 'SSV-USDT-SWAP', 'STORJ-USDT-SWAP', 'STRK-USDT-SWAP', 'STX-USDT-SWAP', 'SUI-USDT-SWAP', 'SUNDOG-USDT-SWAP', 'SUSHI-USDT-SWAP', 'SWARMS-USDT-SWAP', 'SWEAT-USDT-SWAP', 'SWELL-USDT-SWAP', 'T-USDT-SWAP', 'TAO-USDT-SWAP', 'THETA-USDT-SWAP', 'TIA-USDT-SWAP', 'TNSR-USDT-SWAP', 'TRB-USDT-SWAP', 'TRX-USDT-SWAP', 'TURBO-USDT-SWAP', 'ULTI-USDT-SWAP', 'UMA-USDT-SWAP', 'UNI-USDT-SWAP', 'USDC-USDT-SWAP', 'USTC-USDT-SWAP', 'UXLINK-USDT-SWAP', 'VANA-USDT-SWAP', 'VELO-USDT-SWAP', 'VINE-USDT-SWAP', 'VIRTUAL-USDT-SWAP', 'VRA-USDT-SWAP', 'W-USDT-SWAP', 'WAXP-USDT-SWAP', 'WIF-USDT-SWAP', 'WLD-USDT-SWAP', 'WOO-USDT-SWAP', 'X-USDT-SWAP', 'XCH-USDT-SWAP', 'XLM-USDT-SWAP', 'XTZ-USDT-SWAP', 'YFI-USDT-SWAP', 'YGG-USDT-SWAP', 'ZENT-USDT-SWAP', 'ZEREBRO-USDT-SWAP', 'ZETA-USDT-SWAP', 'ZIL-USDT-SWAP', 'ZK-USDT-SWAP', 'ZKJ-USDT-SWAP', 'ZRO-USDT-SWAP', 'ZRX-USDT-SWAP'], 
+                exchange : "okx",
+                exchanges : ["okx","bybit"],
+                initialPrice: 50000,
+                status:"启动",
+                marketPrice:4000,
+                axisPrice:3000,
+                side: '多',
+                Activation_Price:0,
+                Termination_Price:0,
+                num_Initial:10,
+                num_Additional:3,
+                Ratio:3,
+                len_Grid:10,
+                Interval_Proportion:2,
+                num_Limit:4,
+                activeStrategies: [],
+                refreshInterval: null
+            },
+            mounted() {
+                // 启动定时获取数据
+                this.refreshData();
+                this.refreshInterval = setInterval(this.refreshData, 2000);
+            },
+            beforeDestroy() {
+                clearInterval(this.refreshInterval);
+            },
+            methods: {
+            async fetchData() {
+                    try {
+                        const response = await axios.post('http://43.134.114.73:8888/daa/', {
+                            exchange: this.exchange,
+                            selectedPair: this.selectedPair,
+                            side: this.side,
+                            Activation_Price: this.Activation_Price,
+                            Termination_Price: this.Termination_Price,
+                            num_Initial: this.num_Initial,
+                            num_Additional: this.num_Additional,
+                            Ratio: this.Ratio,
+                            len_Grid: this.len_Grid,
+                            Interval_Proportion: this.Interval_Proportion,
+                            num_Limit: this.num_Limit
+                        });
+                        const data = response.data;
+                        // 更新本地数据
+                        this.initialPrice = data.initialPrice;
+                        this.marketPrice = data.marketPrice;
+                        this.status = data.status;
+                        this.axisPrice = data.axisPrice;
+                        // ...其他数据更新...
+                    } catch (error) {
+                        console.error('获取数据失败:', error);
+                    }
+                },
+        
+           async startStrategy() {
+                    try {
+                        const response = await axios.post('http://43.134.114.73:8888/begin/', {
+                            exchange: this.exchange,
+                            selectedPair: this.selectedPair,
+                            side: this.side,
+                            Activation_Price: this.Activation_Price,
+                            Termination_Price: this.Termination_Price,
+                            num_Initial: this.num_Initial,
+                            num_Additional: this.num_Additional,
+                            Ratio: this.Ratio,
+                            len_Grid: this.len_Grid,
+                            Interval_Proportion: this.Interval_Proportion,
+                            num_Limit: this.num_Limit
+                        });
+                        
+                        if (response.data.includes("启动成功")) {
+                            this.activeStrategies.push({
+                                pair: this.selectedPair,
+                                exchange: this.exchange,
+                                initialPrice: this.initialPrice,
+                                marketPrice: this.marketPrice,
+                                axisPrice: this.axisPrice,
+                                side: this.side,
+                                // ...其他参数...
+                            });
+                        }
+                    } catch (error) {
+                        console.error('启动策略失败:', error);
+                    }
+                },
+        
+                async outStrategy() {
+                    try {
+                        await axios.post('http://43.134.114.73:8888/sell_end/', {
+                            exchange: this.exchange,
+                            selectedPair: this.selectedPair,
+                            side: this.side,
+                            Activation_Price: this.Activation_Price,
+                            Termination_Price: this.Termination_Price,
+                            num_Initial: this.num_Initial,
+                            num_Additional: this.num_Additional,
+                            Ratio: this.Ratio,
+                            len_Grid: this.len_Grid,
+                            Interval_Proportion: this.Interval_Proportion,
+                            num_Limit: this.num_Limit
+                        });
+                        this.fetchData();
+                    } catch (error) {
+                        console.error('清仓失败:', error);
+                    }
+                },
+        
+                async stopStrategy() {
+                    try {
+                        await axios.post('http://43.134.114.73:8888/stop/', {
+                            exchange: this.exchange,
+                            selectedPair: this.selectedPair,
+                            side: this.side,
+                            Activation_Price: this.Activation_Price,
+                            Termination_Price: this.Termination_Price,
+                            num_Initial: this.num_Initial,
+                            num_Additional: this.num_Additional,
+                            Ratio: this.Ratio,
+                            len_Grid: this.len_Grid,
+                            Interval_Proportion: this.Interval_Proportion,
+                            num_Limit: this.num_Limit
+                        });
+                        this.fetchData();
+                    } catch (error) {
+                        console.error('暂停失败:', error);
+                    }
+                },
+        
+                async endStrategy() {
+                    try {
+                        await axios.post('http://43.134.114.73:8888/end/', {
+                            exchange: this.exchange,
+                            selectedPair: this.selectedPair,
+                            side: this.side,
+                            Activation_Price: this.Activation_Price,
+                            Termination_Price: this.Termination_Price,
+                            num_Initial: this.num_Initial,
+                            num_Additional: this.num_Additional,
+                            Ratio: this.Ratio,
+                            len_Grid: this.len_Grid,
+                            Interval_Proportion: this.Interval_Proportion,
+                            num_Limit: this.num_Limit
+                        });
+                        this.fetchData();
+                    } catch (error) {
+                        console.error('停止失败:', error);
+                    }
+                },
+        
+                async refreshData() {
+                    fetch('http://43.134.114.73:8888/query/')
+                    .then(response => response.json())
+                    .then(data => {
+                      // 转换数据字段映射
+                      this.activeStrategies = data.map(item => ({
+                        pair: item.pair,        // 如果后端未返回该字段，添加默认值
+                        exchange: item.exchange,    // 同上
+                        initialPrice: item.initialPrice,
+                        marketPrice: item.marketPrice,
+                        axisPrice: item.Activation_Price, // 字段名转换
+                        side: item.side,
+                        num_Initial: item.num_Initial,
+                        num_Additional: item.num_Additional,
+                        Ratio: item.Ratio,
+                        len_Grid: item.len_Grid,
+                        Interval_Proportion: item.Interval_Proportion,
+                        num_Limit: item.num_Limit
+                      }));
+                    })
+                    .catch(error => console.error('请求失败:', error));
+                   
+                }
+            },
+        });
+        
+    </script>
+</body>
+</html>
